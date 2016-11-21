@@ -115,25 +115,44 @@ void TouchHandle::SetOrientation(TouchHandleOrientation orientation) {
 }
 
 bool TouchHandle::WillHandleTouchEvent(const ui::MotionEvent& event) {
+  return WillHandleTouchEventCore(event, false);
+}
+
+bool TouchHandle::WillHandleTouchEventPC(const ui::MotionEvent& event) {
+  return WillHandleTouchEventCore(event, true);
+}
+
+bool TouchHandle::WillHandleTouchEventCore(const ui::MotionEvent& event, bool pc) {
+  int action;
+
   if (!enabled_)
     return false;
 
-  if (!is_dragging_ && event.GetAction() != ui::MotionEvent::ACTION_DOWN)
+  action = event.GetAction();
+  if (pc) {
+    if (!is_dragging_) {
+      if (action != ui::MotionEvent::ACTION_MOVE)
+        return false;
+      action = ui::MotionEvent::ACTION_DOWN;
+    }
+  } else if (!is_dragging_ && event.GetAction() != ui::MotionEvent::ACTION_DOWN)
     return false;
 
-  switch (event.GetAction()) {
+  switch (action) {
     case ui::MotionEvent::ACTION_DOWN: {
       if (!is_visible_)
         return false;
-      const float touch_size = std::max(
-          kMinTouchMajorForHitTesting,
-          std::min(kMaxTouchMajorForHitTesting, event.GetTouchMajor()));
-      const gfx::RectF touch_rect(event.GetX() - touch_size * .5f,
-                                  event.GetY() - touch_size * .5f,
-                                  touch_size,
-                                  touch_size);
-      if (!drawable_->IntersectsWith(touch_rect))
-        return false;
+      if (!pc) {
+        const float touch_size = std::max(
+            kMinTouchMajorForHitTesting,
+            std::min(kMaxTouchMajorForHitTesting, event.GetTouchMajor()));
+        const gfx::RectF touch_rect(event.GetX() - touch_size * .5f,
+                                    event.GetY() - touch_size * .5f,
+                                    touch_size,
+                                    touch_size);
+        if (!drawable_->IntersectsWith(touch_rect))
+          return false;
+      }
       touch_down_position_ = gfx::PointF(event.GetX(), event.GetY());
       touch_to_focus_offset_ = position_ - touch_down_position_;
       touch_down_time_ = event.GetEventTime();

@@ -118,20 +118,20 @@ bool TouchSelectionController::WillHandleTouchEvent(
   }
 
   if (is_selection_active_) {
-    DCHECK(start_selection_handle_);
+    //DCHECK(start_selection_handle_);
     DCHECK(end_selection_handle_);
-    if (start_selection_handle_->is_dragging())
-      return start_selection_handle_->WillHandleTouchEvent(event);
+    //if (start_selection_handle_->is_dragging())
+    //  return start_selection_handle_->WillHandleTouchEvent(event);
 
-    if (end_selection_handle_->is_dragging())
-      return end_selection_handle_->WillHandleTouchEvent(event);
+    //if (end_selection_handle_->is_dragging())
+      return end_selection_handle_->WillHandleTouchEventPC(event);
 
-    const gfx::PointF event_pos(event.GetX(), event.GetY());
-    if ((event_pos - GetStartPosition()).LengthSquared() <=
-        (event_pos - GetEndPosition()).LengthSquared())
-      return start_selection_handle_->WillHandleTouchEvent(event);
-    else
-      return end_selection_handle_->WillHandleTouchEvent(event);
+    //const gfx::PointF event_pos(event.GetX(), event.GetY());
+    //if ((event_pos - GetStartPosition()).LengthSquared() <=
+    //    (event_pos - GetEndPosition()).LengthSquared())
+    //  return start_selection_handle_->WillHandleTouchEvent(event);
+    //else
+    //  return end_selection_handle_->WillHandleTouchEvent(event);
   }
 
   return false;

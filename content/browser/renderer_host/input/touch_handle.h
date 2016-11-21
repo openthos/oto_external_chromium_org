@@ -86,6 +86,8 @@ class CONTENT_EXPORT TouchHandle {
   // Allows touch-dragging of the handle. Returns true if the event was
   // consumed, in which case the caller should cease further handling.
   bool WillHandleTouchEvent(const ui::MotionEvent& event);
+  bool WillHandleTouchEventPC(const ui::MotionEvent& event);
+  bool WillHandleTouchEventCore(const ui::MotionEvent& event, bool pc);
 
   // Ticks an active animation, as requested to the client by |SetNeedsAnimate|.
   // Returns true if an animation is active and requires further ticking.

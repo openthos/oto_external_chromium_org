@@ -202,6 +202,7 @@ class GestureDetector {
   bool longpress_enabled_;
   bool swipe_enabled_;
   bool two_finger_tap_enabled_;
+  bool trigger_longpress_;
 
   // Determines speed during touch scrolling.
   VelocityTrackerState velocity_tracker_;
