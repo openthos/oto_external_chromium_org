@@ -221,6 +221,7 @@ bool GestureDetector::OnTouchEvent(const MotionEvent& ev) {
 
   switch (action) {
     case MotionEvent::ACTION_POINTER_DOWN: {
+      trigger_longpress_ = false;
       down_focus_x_ = last_focus_x_ = focus_x;
       down_focus_y_ = last_focus_y_ = focus_y;
       // Cancel long press and taps.
