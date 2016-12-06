@@ -2035,7 +2035,8 @@ void RenderWidget::didHandleGestureEvent(
     return;
   if (event.type == WebInputEvent::GestureTap) {
     UpdateTextInputState(SHOW_IME_IF_NEEDED, FROM_NON_IME);
-  } else if (event.type == WebInputEvent::GestureLongPress) {
+  } else if ((event.type == WebInputEvent::GestureLongPress)
+             || (event.type == WebInputEvent::GestureTextSelection)) {
     DCHECK(webwidget_);
     if (webwidget_->textInputInfo().value.isEmpty())
       UpdateTextInputState(NO_SHOW_IME, FROM_NON_IME);

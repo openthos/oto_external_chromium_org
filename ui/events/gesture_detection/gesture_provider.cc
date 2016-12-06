@@ -147,6 +147,7 @@ class GestureProvider::GestureListenerImpl
     }
 
     switch (gesture.type()) {
+      case ET_GESTURE_TEXT_SELECTION:
       case ET_GESTURE_LONG_PRESS:
         DCHECK(!IsScaleGestureDetectionInProgress());
         current_longpress_time_ = gesture.time;
@@ -478,6 +479,13 @@ class GestureProvider::GestureListenerImpl
         break;
     }
     return false;
+  }
+
+  virtual void OnTextSelection(const MotionEvent& e) OVERRIDE {
+    DCHECK(!IsDoubleTapInProgress());
+    SetIgnoreSingleTap(true);
+    GestureEventDetails text_selection_details(ET_GESTURE_TEXT_SELECTION);
+    Send(CreateGesture(text_selection_details, e));
   }
 
   virtual void OnLongPress(const MotionEvent& e) OVERRIDE {

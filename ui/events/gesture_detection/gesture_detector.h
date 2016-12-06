@@ -75,6 +75,7 @@ class GestureDetector {
     virtual void OnShowPress(const MotionEvent& e) = 0;
     virtual bool OnSingleTapUp(const MotionEvent& e) = 0;
     virtual void OnLongPress(const MotionEvent& e) = 0;
+    virtual void OnTextSelection(const MotionEvent& e) = 0;
     virtual bool OnScroll(const MotionEvent& e1,
                           const MotionEvent& e2,
                           float distance_x,
@@ -202,7 +203,7 @@ class GestureDetector {
   bool longpress_enabled_;
   bool swipe_enabled_;
   bool two_finger_tap_enabled_;
-  bool trigger_longpress_;
+  bool trigger_textselection_;
 
   // Determines speed during touch scrolling.
   VelocityTrackerState velocity_tracker_;

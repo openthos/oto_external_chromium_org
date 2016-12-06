@@ -241,7 +241,7 @@ TEST_F(TouchSelectionControllerTest, InsertionStaysHiddenIfEmptyRegionTapped) {
 
   // Long-pressing should show the handle even if the editable region is empty.
   insertion_rect.Offset(2, -2);
-  controller().OnLongPressEvent();
+  controller().OnTextSelectionEvent();
   controller().OnSelectionEmpty(true);
   ChangeInsertion(insertion_rect, visible);
   EXPECT_EQ(INSERTION_SHOWN, GetLastEventType());
@@ -278,7 +278,7 @@ TEST_F(TouchSelectionControllerTest, InsertionAppearsAfterTapFollowingTyping) {
 }
 
 TEST_F(TouchSelectionControllerTest, InsertionToSelectionTransition) {
-  controller().OnLongPressEvent();
+  controller().OnTextSelectionEvent();
   controller().OnSelectionEditable(true);
 
   gfx::RectF start_rect(5, 5, 0, 10);
@@ -450,7 +450,7 @@ TEST_F(TouchSelectionControllerTest, InsertionNotResetByRepeatedTapOrPress) {
   EXPECT_EQ(anchor_rect.bottom_left(), GetLastEventAnchor());
 
   // Pressing shouldn't reset the active insertion point.
-  controller().OnLongPressEvent();
+  controller().OnTextSelectionEvent();
   controller().OnSelectionEmpty(true);
   event = MockMotionEvent(MockMotionEvent::ACTION_DOWN, event_time, 0, 0);
   EXPECT_TRUE(controller().WillHandleTouchEvent(event));
@@ -472,7 +472,7 @@ TEST_F(TouchSelectionControllerTest, SelectionBasic) {
   ChangeSelection(start_rect, visible, end_rect, visible);
   EXPECT_EQ(gfx::PointF(), GetLastEventAnchor());
 
-  controller().OnLongPressEvent();
+  controller().OnTextSelectionEvent();
   ChangeSelection(start_rect, visible, end_rect, visible);
   EXPECT_EQ(SELECTION_SHOWN, GetLastEventType());
   EXPECT_EQ(start_rect.bottom_left(), GetLastEventAnchor());
@@ -492,7 +492,7 @@ TEST_F(TouchSelectionControllerTest, SelectionRepeatedLongPress) {
   gfx::RectF end_rect(50, 5, 0, 10);
   bool visible = true;
 
-  controller().OnLongPressEvent();
+  controller().OnTextSelectionEvent();
   ChangeSelection(start_rect, visible, end_rect, visible);
   EXPECT_EQ(SELECTION_SHOWN, GetLastEventType());
   EXPECT_EQ(start_rect.bottom_left(), GetLastEventAnchor());
@@ -500,7 +500,7 @@ TEST_F(TouchSelectionControllerTest, SelectionRepeatedLongPress) {
   // A long press triggering a new selection should re-send the SELECTION_SHOWN
   // event notification.
   start_rect.Offset(10, 10);
-  controller().OnLongPressEvent();
+  controller().OnTextSelectionEvent();
   ChangeSelection(start_rect, visible, end_rect, visible);
   EXPECT_EQ(SELECTION_SHOWN, GetLastEventType());
   EXPECT_EQ(start_rect.bottom_left(), GetLastEventAnchor());
@@ -508,7 +508,7 @@ TEST_F(TouchSelectionControllerTest, SelectionRepeatedLongPress) {
 
 TEST_F(TouchSelectionControllerTest, SelectionDragged) {
   base::TimeTicks event_time = base::TimeTicks::Now();
-  controller().OnLongPressEvent();
+  controller().OnTextSelectionEvent();
 
   // The touch sequence should not be handled if selection is not active.
   MockMotionEvent event(MockMotionEvent::ACTION_DOWN, event_time, 0, 0);
@@ -566,7 +566,7 @@ TEST_F(TouchSelectionControllerTest, SelectionDragged) {
 
 TEST_F(TouchSelectionControllerTest, SelectionDraggedWithOverlap) {
   base::TimeTicks event_time = base::TimeTicks::Now();
-  controller().OnLongPressEvent();
+  controller().OnTextSelectionEvent();
 
   float line_height = 10.f;
   gfx::RectF start_rect(0, 0, 0, line_height);
@@ -662,7 +662,7 @@ TEST_F(TouchSelectionControllerTest, SelectionClearOnTap) {
   gfx::RectF end_rect(50, 5, 0, 10);
   bool visible = true;
 
-  controller().OnLongPressEvent();
+  controller().OnTextSelectionEvent();
   ChangeSelection(start_rect, visible, end_rect, visible);
 
   // Selection should not be cleared if the selection bounds have not changed.

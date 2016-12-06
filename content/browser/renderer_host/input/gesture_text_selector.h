@@ -28,6 +28,7 @@ class CONTENT_EXPORT GestureTextSelectorClient {
   virtual void SelectRange(float x1, float y1, float x2, float y2) = 0;
   virtual void Unselect() = 0;
   virtual void LongPress(base::TimeTicks time, float x, float y) = 0;
+  virtual void TextSelection(base::TimeTicks time, float x, float y) = 0;
 };
 
 // A class to handle gesture-based text selection, such as when clicking first

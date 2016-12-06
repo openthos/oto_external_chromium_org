@@ -63,7 +63,7 @@ class CONTENT_EXPORT TouchSelectionController : public TouchHandleClient {
 
   // To be called before forwarding a longpress event. This allows automatically
   // showing the selection or insertion handles from subsequent bounds changes.
-  void OnLongPressEvent();
+  void OnTextSelectionEvent();
 
   // Hide the handles and suppress bounds updates until the next explicit
   // showing allowance.
@@ -83,7 +83,7 @@ class CONTENT_EXPORT TouchSelectionController : public TouchHandleClient {
   bool Animate(base::TimeTicks animate_time);
 
  private:
-  enum InputEventType { TAP, LONG_PRESS, INPUT_EVENT_TYPE_NONE };
+  enum InputEventType { TAP, TEXT_SELECTION, INPUT_EVENT_TYPE_NONE };
 
   // TouchHandleClient implementation.
   virtual void OnHandleDragBegin(const TouchHandle& handle) OVERRIDE;

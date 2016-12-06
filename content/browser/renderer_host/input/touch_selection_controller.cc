@@ -137,8 +137,8 @@ bool TouchSelectionController::WillHandleTouchEvent(
   return false;
 }
 
-void TouchSelectionController::OnLongPressEvent() {
-  response_pending_input_event_ = LONG_PRESS;
+void TouchSelectionController::OnTextSelectionEvent() {
+  response_pending_input_event_ = TEXT_SELECTION;
   ShowSelectionHandlesAutomatically();
   ShowInsertionHandleAutomatically();
   ResetCachedValuesIfInactive();
@@ -356,7 +356,7 @@ void TouchSelectionController::ActivateSelection() {
   // As a long press received while a selection is already active may trigger
   // an entirely new selection, notify the client but avoid sending an
   // intervening SELECTION_CLEARED update to avoid unnecessary state changes.
-  if (!is_selection_active_ || response_pending_input_event_ == LONG_PRESS) {
+  if (!is_selection_active_ || response_pending_input_event_ == TEXT_SELECTION) {
     is_selection_active_ = true;
     response_pending_input_event_ = INPUT_EVENT_TYPE_NONE;
     client_->OnSelectionEvent(SELECTION_SHOWN, GetStartPosition());

@@ -316,13 +316,15 @@ WebGestureEvent CreateWebGestureEventFromGestureEventData(
       gesture.data.tap.width = data.details.bounding_box_f().width();
       gesture.data.tap.height = data.details.bounding_box_f().height();
       break;
+    case ui::ET_GESTURE_TEXT_SELECTION:
+      gesture.type = WebInputEvent::GestureTextSelection;
+      goto set_data;
     case ui::ET_GESTURE_LONG_PRESS:
       gesture.type = WebInputEvent::GestureLongPress;
-      gesture.data.longPress.width = data.details.bounding_box_f().width();
-      gesture.data.longPress.height = data.details.bounding_box_f().height();
-      break;
+      goto set_data;
     case ui::ET_GESTURE_LONG_TAP:
       gesture.type = WebInputEvent::GestureLongTap;
+    set_data:
       gesture.data.longPress.width = data.details.bounding_box_f().width();
       gesture.data.longPress.height = data.details.bounding_box_f().height();
       break;

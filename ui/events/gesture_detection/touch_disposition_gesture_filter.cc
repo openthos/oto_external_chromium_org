@@ -72,6 +72,7 @@ DispositionHandlingInfo GetDispositionHandlingInfo(EventType type) {
       return Info(RT_START);
     case ET_GESTURE_SHOW_PRESS:
       return Info(RT_START);
+    case ET_GESTURE_TEXT_SELECTION:
     case ET_GESTURE_LONG_PRESS:
       return Info(RT_START);
     case ET_GESTURE_LONG_TAP:

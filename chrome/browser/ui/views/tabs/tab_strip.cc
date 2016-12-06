@@ -2666,6 +2666,7 @@ void TabStrip::OnGestureEvent(ui::GestureEvent* event) {
       }
       break;
 
+    case ui::ET_GESTURE_TEXT_SELECTION:
     case ui::ET_GESTURE_LONG_PRESS:
       if (drag_controller_.get())
         drag_controller_->SetMoveBehavior(TabDragController::REORDER);

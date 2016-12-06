@@ -44,6 +44,7 @@ enum EventType {
   ET_GESTURE_PINCH_BEGIN,
   ET_GESTURE_PINCH_END,
   ET_GESTURE_PINCH_UPDATE,
+  ET_GESTURE_TEXT_SELECTION,
   ET_GESTURE_LONG_PRESS,
   ET_GESTURE_LONG_TAP,
   // A SWIPE gesture can happen at the end of a touch sequence involving one or

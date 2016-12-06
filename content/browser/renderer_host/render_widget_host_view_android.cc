@@ -1414,8 +1414,10 @@ InputEventAckState RenderWidgetHostViewAndroid::FilterInputEvent(
     const blink::WebInputEvent& input_event) {
   if (selection_controller_) {
     switch (input_event.type) {
-      case blink::WebInputEvent::GestureLongPress:
-        selection_controller_->OnLongPressEvent();
+      // TODO: Disable temporarily, until add GestureRightClick.
+      //case blink::WebInputEvent::GestureLongPress:
+      case blink::WebInputEvent::GestureTextSelection:
+        selection_controller_->OnTextSelectionEvent();
         break;
       case blink::WebInputEvent::GestureTap:
         selection_controller_->OnTapEvent();
@@ -1794,7 +1796,7 @@ SkColorType RenderWidgetHostViewAndroid::PreferredReadbackFormat() {
 void RenderWidgetHostViewAndroid::ShowSelectionHandlesAutomatically() {
   // Fake a long press to allow automatic selection handle showing.
   if (selection_controller_)
-    selection_controller_->OnLongPressEvent();
+    selection_controller_->OnTextSelectionEvent();
 }
 
 void RenderWidgetHostViewAndroid::SelectRange(
@@ -1815,6 +1817,14 @@ void RenderWidgetHostViewAndroid::LongPress(
       blink::WebInputEvent::GestureLongPress,
       (time - base::TimeTicks()).InSecondsF(), x, y);
   SendGestureEvent(long_press);
+}
+
+void RenderWidgetHostViewAndroid::TextSelection(
+    base::TimeTicks time, float x, float y) {
+  blink::WebGestureEvent text_selection = WebGestureEventBuilder::Build(
+      blink::WebInputEvent::GestureTextSelection,
+      (time - base::TimeTicks()).InSecondsF(), x, y);
+  SendGestureEvent(text_selection);
 }
 
 // static

@@ -206,15 +206,15 @@ blink::WebGestureEvent MakeWebGestureEventFromUIEvent(
     case ui::ET_SCROLL_FLING_CANCEL:
       gesture_event.type = blink::WebInputEvent::GestureFlingCancel;
       break;
+    case ui::ET_GESTURE_TEXT_SELECTION:
+      gesture_event.type = blink::WebInputEvent::GestureTextSelection;
+      goto set_data;
     case ui::ET_GESTURE_LONG_PRESS:
       gesture_event.type = blink::WebInputEvent::GestureLongPress;
-      gesture_event.data.longPress.width =
-          event.details().bounding_box().width();
-      gesture_event.data.longPress.height =
-          event.details().bounding_box().height();
-      break;
+      goto set_data;
     case ui::ET_GESTURE_LONG_TAP:
       gesture_event.type = blink::WebInputEvent::GestureLongTap;
+    set_data:
       gesture_event.data.longPress.width =
           event.details().bounding_box().width();
       gesture_event.data.longPress.height =

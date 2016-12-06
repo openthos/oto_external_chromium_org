@@ -189,7 +189,7 @@ GestureDetector::GestureDetector(
       longpress_enabled_(true),
       swipe_enabled_(false),
       two_finger_tap_enabled_(false),
-      trigger_longpress_(false) {
+      trigger_textselection_(false) {
   DCHECK(listener_);
   Init(config);
 }
@@ -221,7 +221,7 @@ bool GestureDetector::OnTouchEvent(const MotionEvent& ev) {
 
   switch (action) {
     case MotionEvent::ACTION_POINTER_DOWN: {
-      trigger_longpress_ = false;
+      trigger_textselection_ = false;
       down_focus_x_ = last_focus_x_ = focus_x;
       down_focus_y_ = last_focus_y_ = focus_y;
       // Cancel long press and taps.
@@ -320,7 +320,10 @@ bool GestureDetector::OnTouchEvent(const MotionEvent& ev) {
       //timeout_handler_->StartTimeout(SHOW_PRESS);
       //if (longpress_enabled_)
       //  timeout_handler_->StartTimeout(LONG_PRESS);
-      trigger_longpress_ = true;
+      if (ev.GetButtonState() == ui::MotionEvent::BUTTON_SECONDARY)
+        listener_->OnLongPress(*current_down_event_);
+      else
+        trigger_textselection_ = true;
       handled |= listener_->OnDown(ev);
       break;
 
@@ -329,9 +332,9 @@ bool GestureDetector::OnTouchEvent(const MotionEvent& ev) {
         const float scroll_x = last_focus_x_ - focus_x;
         const float scroll_y = last_focus_y_ - focus_y;
 
-        if (trigger_longpress_) {
-          listener_->OnLongPress(*current_down_event_);
-          trigger_longpress_ = false;
+        if (trigger_textselection_) {
+          listener_->OnTextSelection(*current_down_event_);
+          trigger_textselection_ = false;
         }
         if (is_double_tapping_) {
           // Give the move events of the double-tap.

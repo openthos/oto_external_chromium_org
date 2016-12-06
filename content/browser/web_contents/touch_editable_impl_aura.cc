@@ -150,6 +150,7 @@ bool TouchEditableImplAura::HandleInputEvent(const ui::Event* event) {
           gesture_event->details().tap_count() == 1 &&
           text_input_type_ != ui::TEXT_INPUT_TYPE_NONE;
       break;
+    case ui::ET_GESTURE_TEXT_SELECTION:
     case ui::ET_GESTURE_LONG_PRESS:
       selection_gesture_in_process_ = true;
       break;

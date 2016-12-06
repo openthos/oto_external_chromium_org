@@ -287,6 +287,7 @@ const char* WebInputEventTraits::GetName(WebInputEvent::Type type) {
     CASE_TYPE(GestureDoubleTap);
     CASE_TYPE(GestureTwoFingerTap);
     CASE_TYPE(GestureLongPress);
+    CASE_TYPE(GestureTextSelection);
     CASE_TYPE(GestureLongTap);
     CASE_TYPE(GesturePinchBegin);
     CASE_TYPE(GesturePinchEnd);

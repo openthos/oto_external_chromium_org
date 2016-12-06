@@ -266,6 +266,7 @@ void LongPressAffordanceHandler::ProcessEvent(aura::Window* target,
     case ui::ET_GESTURE_TAP_CANCEL:
       StopAffordance();
       break;
+    case ui::ET_GESTURE_TEXT_SELECTION:
     case ui::ET_GESTURE_LONG_PRESS:
       End();
       break;

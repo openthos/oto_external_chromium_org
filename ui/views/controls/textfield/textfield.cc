@@ -732,7 +732,9 @@ void Textfield::OnGestureEvent(ui::GestureEvent* event) {
 #endif
       event->SetHandled();
       break;
-    case ui::ET_GESTURE_LONG_PRESS:
+    // TODO: Disable temporarily, until add ET_GESTURE_RIGHT_CLICK
+    //case ui::ET_GESTURE_LONG_PRESS:
+    case ui::ET_GESTURE_TEXT_SELECTION:
       if (!GetRenderText()->IsPointInSelection(event->location())) {
         // If long-press happens outside selection, select word and try to
         // activate touch selection.
